@@ -70,7 +70,11 @@ const Input = ({ setLinks, links }) => {
           />
           <button
             type="submit"
-            className="  bg-[#144EE3] text-[#C9CED6] w-[45px] h-[45px] rounded-full flex items-center justify-center "
+            className={` ${
+              values.link != "" && !errors?.link
+                ? "bg-[#144EE3] text-[#C9CED6] "
+                : "bg-[#353C4A]/20 text-[#353C4A]"
+            } duration-700  w-[45px] h-[45px] rounded-full flex items-center justify-center`}
           >
             <TfiUnlink size={24} />
           </button>

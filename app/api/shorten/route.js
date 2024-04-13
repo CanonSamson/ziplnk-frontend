@@ -1,6 +1,6 @@
 import { connect } from "@/db";
-import ShortUrl from "../_models/ShortUrl"; // Adjust the path as needed
 import { NextResponse } from "next/server";
+import pUrlsSchema from "@/models/ShortUrl";
 
 export async function POST(request) {
   try {
@@ -14,20 +14,18 @@ export async function POST(request) {
 
     do {
       shortUrl = generateShortUrl();
-      existingShortUrl = await ShortUrl.findOne({ short_url: shortUrl });
+      existingShortUrl = await pUrlsSchema.findOne({ short_url: shortUrl });
     } while (existingShortUrl);
 
     const url = { ip: request.ip, short_url: shortUrl, original_url };
-    await ShortUrl.create(url);
+    await pUrlsSchema.create(url);
 
     return NextResponse.json(url, { status: 201 }); // Fix the typo here
   } catch (error) {
     console.error("Error saving to MongoDB:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      {
-        status: 500,
-      }
+      { status: 500 }
     );
   }
 }
