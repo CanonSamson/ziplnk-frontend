@@ -14,7 +14,7 @@ const PopUp = ({ text, close, setClose }) => {
   return (
     <div
       className={`${
-        close ? "top-[15%]" : "top-[-200%]"
+        close ? "top-[100px]" : "top-[-200px]"
       } duration-700 fixed mx-4 w-full right-0 text-[14px] flex items-center justify-end`}
     >
       <div className=" border bg-[#181E29] text-primary flex items-center gap-4 min-w-[150px] border-primary  rounded-full p-2 px-4 ">
