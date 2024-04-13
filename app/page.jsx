@@ -4,10 +4,13 @@ import Link from "next/link";
 import { FaLink } from "react-icons/fa6";
 import Input from "./Input";
 import ShortenLinks from "./ShortenLinks";
-{/* <Image src="/Logo-lnk.svg" width={40} height={30} /> */}
+import { IoMdCloseCircleOutline } from "react-icons/io";
+import PopUp from "./PopUp";
+
 export default function Home() {
   return (
-    <main className="  min-h-screen text-white text-[14px] bg-[#181E29] flex flex-col w-full">
+    <main className="  min-h-screen px-4 text-white text-[14px] bg-[#181E29] flex flex-col w-full">
+
       <div className=" max-w-[1200px]  p-5  mx-auto  w-full flex items-center justify-between   ">
         <Link href="/" className=" items-center flex font-semibold text-2xl">
           ZIP
@@ -30,7 +33,7 @@ export default function Home() {
           Shorten Your Loooong Links :)
         </h1>
         <p className=" text-[#C9CED6] mt-5 text-[16px]">
-          Linkly is an efficient and easy-to-use URL shortening service that
+          Ziplnk is an efficient and easy-to-use URL shortening service that
           streamlines your online experience.
         </p>
 

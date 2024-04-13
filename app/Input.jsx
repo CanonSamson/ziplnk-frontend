@@ -3,10 +3,13 @@ import { useFormik } from "formik";
 import { FaLink } from "react-icons/fa6";
 import * as Yup from "yup";
 import { TfiUnlink } from "react-icons/tfi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import PopUp from "./PopUp";
 
 const Input = () => {
   const [toggle, setToggle] = useState(true);
+  const [close, setClose] = useState(false);
+
   const onSubmit = async (values) => {
     try {
     } catch (error) {
@@ -26,8 +29,17 @@ const Input = () => {
     }),
     onSubmit,
   });
+
+  useEffect(() => {
+    if (!touched.link) return;
+    if (errors.link) {
+      setClose(true);
+    }
+  }, [errors]);
+
   return (
     <>
+      <PopUp text={errors?.link} setClose={setClose} close={close} />
       <form
         onSubmit={handleSubmit}
         className=" max-w-[600px] w-full mx-auto rounded-full flex bg-[#181E29] p-2 border-4 border-[#353C4A]  text-[#C9CED6] items-center"
@@ -42,7 +54,10 @@ const Input = () => {
             className=" focus:outline-none bg-transparent flex-1 h-[45px]"
             value={values.link}
           />
-          <button className="  bg-[#144EE3] text-[#C9CED6] w-[45px] h-[45px] rounded-full flex items-center justify-center ">
+          <button
+            type="submit"
+            className="  bg-[#144EE3] text-[#C9CED6] w-[45px] h-[45px] rounded-full flex items-center justify-center "
+          >
             <TfiUnlink size={24} />
           </button>
         </div>
@@ -57,8 +72,8 @@ const Input = () => {
           <span
             className={`${
               toggle
-                ? "bg-[#144EE3]  right-[4px] left-auto "
-                : " right-auto left-[4px] bg-[#353C4A]"
+                ? "bg-[#144EE3]  right-[4px] left-auto"
+                : "right-auto left-[4px] bg-[#353C4A]"
             } duration-700  absolute h-[16px] w-[16px] flex rounded-full`}
           />
         </button>

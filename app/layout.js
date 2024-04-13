@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "Shorten Your Loooong Links :)",
   description:
-    " Linkly is an efficient and easy-to-use URL shortening service that streamlines your online experience.",
+    " Ziplnk is an efficient and easy-to-use URL shortening service that streamlines your online experience.",
   icons: {
     icon: ["/favicon.ico?v=4"],
     apple: ["/apple-touch-icon.png?v=4"],
