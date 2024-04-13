@@ -10,7 +10,6 @@ import PopUp from "./PopUp";
 export default function Home() {
   return (
     <main className="  min-h-screen px-4 text-white text-[14px] bg-[#181E29] flex flex-col w-full">
-
       <div className=" max-w-[1200px]  p-5  mx-auto  w-full flex items-center justify-between   ">
         <Link href="/" className=" items-center flex font-semibold text-2xl">
           ZIP
@@ -36,10 +35,9 @@ export default function Home() {
           Ziplnk is an efficient and easy-to-use URL shortening service that
           streamlines your online experience.
         </p>
-
-        <div className=" mt-5">
-          <Input />
-        </div>
+      </div>
+      <div className=" mt-5">
+        <Input />
       </div>
       <ShortenLinks />
     </main>

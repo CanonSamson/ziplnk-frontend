@@ -6,15 +6,29 @@ import { TfiUnlink } from "react-icons/tfi";
 import { useEffect, useState } from "react";
 import PopUp from "./PopUp";
 
-const Input = () => {
+const Input = ({ setLinks, links }) => {
   const [toggle, setToggle] = useState(true);
   const [close, setClose] = useState(false);
 
   const onSubmit = async (values) => {
     try {
+      const response = await fetch(`/api/shorten`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        return setLinks([...data, links]);
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed");
+      }
     } catch (error) {
-      console.log(error);
-    } finally {
+      console.error(error);
+      throw error;
     }
   };
 
