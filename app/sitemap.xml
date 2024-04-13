@@ -1,0 +1,10 @@
+export default function sitemap() {
+  return [
+    {
+      url: 'http://ziplnk.xyz',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 1,
+    },
+  ]
+}
