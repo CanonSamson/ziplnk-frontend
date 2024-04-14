@@ -1,11 +1,6 @@
-import Image from "next/image";
-// Import Link from Next.js
 import Link from "next/link";
 import { FaLink } from "react-icons/fa6";
-import Input from "./Input";
-import ShortenLinks from "./ShortenLinks";
-import { IoMdCloseCircleOutline } from "react-icons/io";
-import PopUp from "./PopUp";
+import Main from "./Main";
 
 export default function Home() {
   return (
@@ -36,10 +31,7 @@ export default function Home() {
           streamlines your online experience.
         </p>
       </div>
-      <div className=" mt-5">
-        <Input />
-      </div>
-      <ShortenLinks />
+      <Main />
     </main>
   );
 }

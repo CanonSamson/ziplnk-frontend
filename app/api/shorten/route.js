@@ -2,12 +2,12 @@ import { connect } from "@/db";
 import { NextResponse } from "next/server";
 import pUrlsSchema from "@/models/ShortUrl";
 
-export async function POST(request) {
+export async function POST(req) {
   try {
     await connect();
 
-    const body = await request.json();
-    const { original_url } = body;
+    const body = await req.json();
+    const { original_url, uuid } = body;
 
     let shortUrl;
     let existingShortUrl;
@@ -17,20 +17,19 @@ export async function POST(request) {
       existingShortUrl = await pUrlsSchema.findOne({ short_url: shortUrl });
     } while (existingShortUrl);
 
-    const url = { ip: request.ip, short_url: shortUrl, original_url };
+    const url = { uuid: uuid, short_url: shortUrl, original_url };
     await pUrlsSchema.create(url);
 
-    return NextResponse.json(url, { status: 201 }); // Fix the typo here
+    return NextResponse.json(url, { status: 201 });
   } catch (error) {
-    console.error("Error saving to MongoDB:", error);
+    console.error("error saving to mongo_db:", error);
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: "Internal Server error" },
       { status: 500 }
     );
   }
 }
 
-function generateShortUrl() {
-  // Generate a random short URL for simplicity
+const generateShortUrl = () => {
   return Math.random().toString(36).substr(2, 6);
-}
+};

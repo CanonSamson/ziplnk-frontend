@@ -10,7 +10,7 @@ const PopUp = ({ text, close, setClose }) => {
         setClose(false);
       }, 3000);
     }
-  }, [close]);
+  }, [close, setClose]);
   return (
     <div
       className={`${

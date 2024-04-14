@@ -5,44 +5,61 @@ import * as Yup from "yup";
 import { TfiUnlink } from "react-icons/tfi";
 import { useEffect, useState } from "react";
 import PopUp from "./PopUp";
-
-const Input = ({ setLinks, links }) => {
+import { AiOutlineLoading } from "react-icons/ai";
+import { v4 } from "uuid";
+const Input = ({ setLinks, links, copyToClipboard }) => {
   const [toggle, setToggle] = useState(true);
   const [close, setClose] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const onSubmit = async (values) => {
+    setLoading(true);
+
+    const storedUuid = localStorage.getItem("uuid");
+    let uuid;
+    if (storedUuid) uuid = storedUuid;
+    else {
+      uuid = v4();
+      localStorage.setItem("uuid", uuid);
+    }
+
     try {
       const response = await fetch(`/api/shorten`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+
+        body: JSON.stringify({ original_url: values.link, uuid }),
       });
       if (response.ok) {
+        values.link = "";
+        setTouched({});
         const data = await response.json();
-        return setLinks([...data, links]);
+        if (toggle) copyToClipboard(`https://ziplnk.xyz/p/${data.short_url}`);
+        return setLinks([data, ...links]);
       } else {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Failed");
+        console.log(errorData.message || "Failed");
       }
     } catch (error) {
-      console.error(error);
-      throw error;
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const { values, handleSubmit, handleChange, touched, errors } = useFormik({
-    initialValues: {
-      link: "",
-    },
-    validationSchema: Yup.object({
-      link: Yup.string()
-        .url("Please enter a valid URL")
-        .required("Link is required"),
-    }),
-    onSubmit,
-  });
+  const { values, handleSubmit, handleChange, setTouched, touched, errors } =
+    useFormik({
+      initialValues: {
+        link: "",
+      },
+      validationSchema: Yup.object({
+        link: Yup.string()
+          .url("Please enter a valid URL")
+          .required("Link is required"),
+      }),
+      onSubmit,
+    });
 
   useEffect(() => {
     if (!touched.link) return;
@@ -76,7 +93,11 @@ const Input = ({ setLinks, links }) => {
                 : "bg-[#353C4A]/20 text-[#353C4A]"
             } duration-700  w-[45px] h-[45px] rounded-full flex items-center justify-center`}
           >
-            <TfiUnlink size={24} />
+            {loading ? (
+              <AiOutlineLoading className=" animate-spin" size={24} />
+            ) : (
+              <TfiUnlink size={24} />
+            )}
           </button>
         </div>
       </form>
