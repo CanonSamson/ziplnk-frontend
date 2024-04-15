@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { FaLink } from "react-icons/fa6";
 import Main from "./Main";
+import PostHog from "./PostHog";
 
 export default function Home() {
   return (
     <main className="  min-h-screen px-4 text-white text-[14px] bg-[#181E29] flex flex-col w-full">
+      <PostHog />
       <div className=" max-w-[1200px]  p-5  mx-auto  w-full flex items-center justify-between   ">
         <Link href="/" className=" items-center flex font-semibold text-2xl">
           ZIP
